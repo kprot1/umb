@@ -1,0 +1,8 @@
+main:
+    path: /
+    controller: UmbBundle:Main:main
+
+umb:
+    path: /umb
+    controller: UmbBundle:Main:umb
+
