@@ -1,0 +1,41 @@
+imports:
+  - { resource: string_finder.yaml }
+
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+
+    Umb\:
+        resource: '../../*'
+        exclude: '../../{Migrations}'
+
+    Umb\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
+
+    Umb\Services\StringFinderService:
+        class: Umb\Services\StringFinderService
+
+    Umb\Strategies\CsvStringFinderStrategy:
+        class: Umb\Strategies\CsvStringFinderStrategy
+        tags: ['strategy.string_finder_strategies']
+    Umb\Strategies\TxtStringFinderStrategy:
+        class: Umb\Strategies\TxtStringFinderStrategy
+        tags: ['strategy.string_finder_strategies']
+
+    Umb\Converter\StringFinderParamConverter:
+        class: Umb\Converter\StringFinderParamConverter
+        tags:
+            - { name: request.param_converter, converter: string_finder_param_converter }
+
+    Umb\Validator\StringFinderRequestValidator:
+        class: Umb\Validator\StringFinderRequestValidator
+        arguments:
+            - '%file_max_size%'
+            - '%file_mime_types%'
+            - '%file_extensions%'
+
+    Umb\Tests\StringFinderServiceTest:
+        class: Umb\Tests\Functional\StringFinderServiceTest
