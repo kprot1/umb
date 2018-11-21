@@ -1,0 +1,50 @@
+{% extends '@Umb/base.html.twig' %}
+
+{% block body %}
+    <section id="umb">
+        <form action="{{ path('umb') }}" method="post" enctype="multipart/form-data">
+            {{ form_label(form.search) }}
+            {{ form_widget(form.search, {'attr': {'v-model': 'search'}}) }}
+            {{ form_errors(form.search) }}
+
+            {{ form_widget(form.file, {'attr': {'v-model': 'file'}}) }}
+            {{ form_errors(form.file) }}
+
+            {{ form_rest(form) }}
+            <input type="submit" value="Поиск" @click="ajaxToUmb()">
+        </form>
+        <p>
+            <% result %>
+        </p>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        new Vue({
+           'el': '#umb',
+            delimiters: ['<%','%>'],
+            data: {
+                search: '',
+                file: null,
+                result: ''
+            },
+            methods: {
+               ajaxToUmb: function () {
+                   axios.post(
+                       '{{ path('umb') }}',
+                       {
+                           search: this.search,
+                           file: this.file
+                       }
+                   ).then(
+                       response => {
+                           this.result = response.data
+                       }
+                   );
+               }
+            }
+        });
+    </script>
+{% endblock %}
