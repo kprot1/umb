@@ -1,0 +1,10 @@
+{
+  "name": "Umb/UmbBundle",
+  "description": "Umb bundle",
+  "type": "symfony-bundle",
+  "license": "proprietary",
+  "require": {
+    "league/csv": "9.1.*",
+    "phpunit/phpunit": "7.4.*"
+  }
+}
