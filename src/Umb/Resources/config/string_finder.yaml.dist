@@ -1,0 +1,8 @@
+parameters:
+    file_max_size: 10
+    file_mime_types:
+        - text/csv
+        - text/plain
+    file_extensions:
+        - csv
+        - txt
