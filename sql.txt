@@ -1,0 +1,31 @@
+with
+  find_repeat as (
+    select
+      id,
+      group_id,
+      case
+        when
+          group_id = lag(group_id) over()
+            then 1
+            else 0
+      end as "is_repeat"
+    from users
+  ),
+
+  without_repeat as (
+    select
+      id,
+      group_id,
+      is_repeat
+    from find_repeat
+    where is_repeat <> 1
+  )
+    select
+      id,
+      group_id,
+      case
+        when lead(id) over() is null
+          then 1
+          else lead(id) over() - id
+      end as count
+    from without_repeat;
