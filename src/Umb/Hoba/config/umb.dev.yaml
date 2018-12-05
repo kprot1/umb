@@ -1,0 +1,7 @@
+version: "3.3"
+services:
+  umb:
+    environment:
+      XDEBUG_CONFIG: remote_host=${HOST} remote_enable=1 remote_autostart=1
+    volumes:
+      - '${UMB_PATH}:/app'

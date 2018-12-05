@@ -1,0 +1,15 @@
+version: "3.3"
+services:
+    postgres:
+        image: "postgres:10-alpine"
+        ports:
+          - 15634:5432
+        volumes:
+          - pgsql-data:/var/lib/postgresql/data
+        environment:
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=root
+
+volumes:
+  pgsql-data:
+    driver: local
